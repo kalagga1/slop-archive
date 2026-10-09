@@ -40,6 +40,8 @@ Please include:
 - **When you spotted it** (roughly is fine)
 - **Telltale signs**, e.g. `delve`, `tapestry`, `fake confidence`, `broken poem`
 
+**Big image?** Shrink it first with [Squoosh](https://squoosh.app/), a free tool that works right in your browser (nothing to install, no account). Drop your image in, choose **WebP** on the right, and lower the quality slider until the file size shown is under **300 KB**. If it's still too big, use **Resize** to make it about 1200 pixels wide. Then download it and attach it to your submission.
+
 A curator reviews every submission, removes personal info, compresses images so the site stays fast (and free), and adds it as a new exhibit.
 
 </div>
