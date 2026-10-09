@@ -1,0 +1,12 @@
+---
+layout: base.njk
+title: Tags
+permalink: /tags/
+---
+<h1>Browse by telltale sign</h1>
+<p class="lede">Every specimen is tagged with the tics that gave it away.</p>
+<ul class="tag-index">
+{% for t in collections.slopTags %}
+  <li><a href="/tags/{{ t.slug }}/"><span class="pill">{{ t.name }}</span></a> <span class="count">{{ t.entries.length }} exhibit{% if t.entries.length != 1 %}s{% endif %}</span></li>
+{% endfor %}
+</ul>

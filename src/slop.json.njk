@@ -1,0 +1,9 @@
+---
+permalink: /slop.json
+eleventyExcludeFromCollections: true
+eleventyImport:
+  collections: ["slop"]
+---
+[{% for item in collections.slop %}
+  {"no": {{ item.data.exhibit | exhibitNo | json | safe }}, "title": {{ item.data.title | json | safe }}, "url": {{ item.url | json | safe }}, "spotted_in": {{ item.data.spotted_in | json | safe }}, "spotted_on": {{ item.data.spotted_on | json | safe }}, "labels": {{ item.data | allLabels | json | safe }}, "video": {{ (item.data.video | videoInfo).watch | default(null) | json | safe }}, "image": {% set im = item.data.image | imageInfo %}{% if im %}{"src": {{ im.src | json | safe }}, "alt": {{ (item.data.image_alt or item.data.title) | json | safe }}}{% else %}null{% endif %}, "html": {{ item.content | json | safe }}}{% if not loop.last %},{% endif %}{% endfor %}
+]

@@ -1,0 +1,51 @@
+{#-
+  "Slop of the Week" newsletter signup. Configure in src/_data/site.json -> "newsletter".
+  Set nlVariant = "home" | "footer" | "page" before including.
+  Providers: buttondown (needs username), beehiiv (needs embedUrl), substack (needs embedUrl
+  or archiveUrl), form (any provider: formAction + optional emailField). See README > Newsletter.
+-#}
+{%- set nl = site.newsletter %}
+{%- set nlName = nl.name or "Slop of the Week" %}
+<section class="newsletter newsletter-{{ nlVariant or 'home' }}{% if not nl.enabled %} is-disabled{% endif %}" aria-label="{{ nlName }} newsletter">
+  {%- if nlVariant == "page" %}
+  <p class="newsletter-kicker">📬 Subscribe</p>
+  <h2>Get the bulletin</h2>
+  <p class="newsletter-pitch">Free, weekly, and slop-only. Enter your email and the next specimen comes straight to you.</p>
+  {%- elif nlVariant != "footer" %}
+  <p class="newsletter-kicker">📬 The weekly bulletin</p>
+  <h2>{{ nlName }}</h2>
+  <p class="newsletter-pitch">One freshly acquired specimen in your inbox every week: the finest text, images, and video the machines served up, plus a curator's note. Unsubscribe whenever you've had enough slop.</p>
+  {%- else %}
+  <p class="newsletter-footer-title">📬 <strong>{{ nlName }}</strong>: one fresh specimen a week, by email.</p>
+  {%- endif %}
+
+  {%- if nl.enabled and nl.provider == "buttondown" and nl.username %}
+  <form class="newsletter-form" action="https://buttondown.com/api/emails/embed-subscribe/{{ nl.username }}" method="post" target="_blank">
+    <label class="visually-hidden" for="nl-email-{{ nlVariant }}">Email address</label>
+    <input id="nl-email-{{ nlVariant }}" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+    <button class="btn" type="submit">Subscribe</button>
+  </form>
+  {%- elif nl.enabled and nl.provider == "form" and nl.formAction %}
+  <form class="newsletter-form" action="{{ nl.formAction }}" method="post" target="_blank">
+    <label class="visually-hidden" for="nl-email-{{ nlVariant }}">Email address</label>
+    <input id="nl-email-{{ nlVariant }}" type="email" name="{{ nl.emailField or 'email' }}" placeholder="you@example.com" autocomplete="email" required>
+    <button class="btn" type="submit">Subscribe</button>
+  </form>
+  {%- elif nl.enabled and (nl.provider == "beehiiv" or nl.provider == "substack") and nl.embedUrl %}
+  <iframe class="newsletter-embed newsletter-embed-{{ nl.provider }}" src="{{ nl.embedUrl }}" title="Subscribe to {{ nlName }}" loading="lazy" frameborder="0" scrolling="no"></iframe>
+  {%- elif nl.enabled and nl.provider == "substack" and nl.archiveUrl %}
+  <p><a class="btn" href="{{ nl.archiveUrl }}" rel="noopener">Subscribe on Substack →</a></p>
+  {%- else %}
+  {#- Disabled / not configured yet: show a friendly "coming soon" state. #}
+  <form class="newsletter-form" aria-disabled="true" onsubmit="return false">
+    <label class="visually-hidden" for="nl-email-{{ nlVariant }}">Email address (signup coming soon)</label>
+    <input id="nl-email-{{ nlVariant }}" type="email" placeholder="you@example.com" disabled>
+    <button class="btn" type="button" disabled>Coming soon</button>
+  </form>
+  <p class="newsletter-todo">The presses are warming up. Signups open soon.{% if nlVariant == "page" %} <span class="todo">(TODO: set up Buttondown, beehiiv, or Substack in <code>src/_data/site.json</code> → <code>newsletter</code>. See README.)</span>{% endif %}</p>
+  {%- endif %}
+
+  {%- if nlVariant == "home" %}
+  <p class="newsletter-more"><a href="/newsletter/">What's in it? →</a></p>
+  {%- endif %}
+</section>

@@ -1,0 +1,32 @@
+{
+  "title": "The Slop Archive",
+  "tagline": "A museum of uncanny, overconfident, and deeply delved AI slop, in every medium: text, images, and video.",
+  "url": "https://kalagga1.github.io",
+  "repo": "https://github.com/kalagga1/slop-archive",
+  "submitFormUrl": "",
+  "giscus": {
+    "enabled": false,
+    "_comment": "TODO: fill these in from https://giscus.app, then set enabled to true. See README > Comments.",
+    "repo": "kalagga1/slop-archive",
+    "repoId": "TODO_REPO_ID",
+    "category": "Exhibit comments",
+    "categoryId": "TODO_CATEGORY_ID",
+    "mapping": "pathname",
+    "theme": "light"
+  },
+  "shop": {
+    "_comment": "TODO (Geoff): paste your print-on-demand store link into url (Redbubble, Spring, or Printful storefront). While it starts with TODO, the Buy buttons point at the 'store opening soon' note instead. Products live in src/_data/merch.json; each can also have its own url.",
+    "url": "TODO: https://YOUR-STORE.redbubble.com",
+    "provider": "Redbubble"
+  },
+  "newsletter": {
+    "_comment": "TODO (Geoff): set enabled to true and pick a provider: buttondown, beehiiv, substack, or form. See README > Newsletter.",
+    "enabled": false,
+    "name": "Slop of the Week",
+    "provider": "buttondown",
+    "username": "TODO_BUTTONDOWN_USERNAME",
+    "formAction": "",
+    "embedUrl": "",
+    "archiveUrl": ""
+  }
+}

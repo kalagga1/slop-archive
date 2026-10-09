@@ -1,0 +1,21 @@
+---
+layout: base.njk
+pagination:
+  data: collections.slopTags
+  size: 1
+  alias: tag
+permalink: "/tags/{{ tag.slug }}/"
+eleventyComputed:
+  title: "Tagged “{{ tag.name }}”"
+---
+<p class="kicker"><a href="/tags/">Tags</a> / {{ tag.name }}</p>
+<h1>Tagged <span class="pill pill-lg">{{ tag.name }}</span></h1>
+<ul class="exhibit-list exhibit-list-full">
+{% for item in tag.entries %}
+  <li>
+    <a href="{{ item.url }}"><span class="no">{{ item.data.exhibit | exhibitNo }}</span> {{ item.data.title }}</a>
+    <span class="where">{{ item.data.spotted_in }} · {{ item.data.spotted_on | prettyDate }}</span>
+  </li>
+{% endfor %}
+</ul>
+<p><a href="/tags/">← All tags</a></p>

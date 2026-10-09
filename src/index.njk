@@ -1,0 +1,44 @@
+---
+layout: base.njk
+---
+<section class="hero">
+  <img class="hero-art" src="/assets/img/hero.svg" width="960" height="360" alt="A museum gallery: a melting green blob of slop sits on a pedestal under a spotlight, behind a velvet rope, between framed works of AI-made slop." fetchpriority="high">
+  <p class="kicker">Now open · Admission free · Text, images &amp; video</p>
+  <h1>{{ site.title }}</h1>
+  <p class="lede">{{ site.tagline }} Preserved for future historians, who will want to know what all the delving was about.</p>
+  <button type="button" class="btn btn-giant" data-random-show>🎰 Random slop</button>
+</section>
+
+<section class="random-stage" id="random-stage" hidden aria-live="polite">
+  <article class="exhibit exhibit-inline">
+    <p class="kicker" data-f="no"></p>
+    <h2 data-f="title"></h2>
+    <p class="example-flag" data-f="example" hidden>Example placeholder, not real found slop</p>
+    <figure class="artwork artwork-inline" data-f="imagewrap" hidden><div class="artwork-frame"><div class="artwork-mat"><img data-f="image" alt="" decoding="async"></div></div></figure>
+    <p class="video-link" data-f="videowrap" hidden>🎞️ This exhibit includes video. <a data-f="video" href="#">Watch it on the exhibit page</a></p>
+    <figure class="specimen"><div class="specimen-text" data-f="html"></div></figure>
+    <p class="meta"><span data-f="spotted"></span></p>
+    <p class="exhibit-actions">
+      <a class="btn" data-f="link" href="#">View the full exhibit →</a>
+      <button type="button" class="btn btn-ghost" data-random-show>Pull the lever again</button>
+    </p>
+  </article>
+</section>
+
+{% set nlVariant = "home" %}{% include "newsletter-box.njk" %}
+
+<section class="grid-2">
+  <div>
+    <h2>Newest acquisitions</h2>
+    <ul class="exhibit-list">
+    {% for item in collections.slop | head(5) %}
+      <li><a href="{{ item.url }}"><span class="no">{{ item.data.exhibit | exhibitNo }}</span> {{ item.data.title }}</a> <span class="where">{{ item.data.spotted_in }}</span></li>
+    {% endfor %}
+    </ul>
+    <p><a href="/exhibits/">See all {{ collections.slop.length }} exhibits →</a></p>
+  </div>
+  <div>
+    <h2>Browse by telltale sign</h2>
+    <p class="tags">{% for t in collections.slopTags %}<a class="pill" href="/tags/{{ t.slug }}/">{{ t.name }} <small>{{ t.entries.length }}</small></a>{% endfor %}</p>
+  </div>
+</section>

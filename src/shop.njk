@@ -1,0 +1,43 @@
+---
+layout: base.njk
+title: Gift shop
+description: "The Slop Archive gift shop: t-shirts, mugs, and stickers printed with the finest machine-made phrases."
+permalink: /shop/
+---
+{#- Store link: src/_data/site.json -> shop.url. Products: src/_data/merch.json. -#}
+{%- set storeReady = site.shop.url and not (site.shop.url | string).startsWith("TODO") %}
+<section class="shop-hero">
+  <p class="kicker">Exit through the gift shop</p>
+  <h1>The Slop Shop</h1>
+  <p class="lede">Commemorate your visit with souvenirs bearing the archive's most beloved phrases. Every design is pure typography, lovingly hand-delved by humans.</p>
+</section>
+
+{%- if not storeReady %}
+<div class="notice" id="store-todo" role="note">
+  <strong>🚧 Store opening soon.</strong> The shelves are stocked, but the till isn't open yet.
+  <span class="todo">(TODO, Geoff: paste your print-on-demand store link into <code>src/_data/site.json</code> → <code>shop.url</code>. The Buy buttons below point here until you do.)</span>
+</div>
+{%- endif %}
+
+<ul class="shop-grid">
+{%- for p in merch %}
+  {%- set buyUrl = p.url or (site.shop.url if storeReady else "#store-todo") %}
+  <li class="product">
+    <div class="product-art product-{{ p.style or 'paper' }}" aria-hidden="true">
+      <span class="product-slogan">{{ p.slogan }}</span>
+    </div>
+    <div class="product-body">
+      <p class="product-type">{{ p.item }}</p>
+      <h2 class="product-name">“{{ p.slogan }}”</h2>
+      <p class="product-note">{{ p.note }}</p>
+      <a class="btn product-buy" href="{{ buyUrl }}"{% if storeReady or p.url %} rel="noopener" target="_blank"{% endif %}>Buy{% if not (storeReady or p.url) %} <small>(soon)</small>{% endif %}</a>
+    </div>
+  </li>
+{%- endfor %}
+</ul>
+
+<div class="prose shop-fine-print">
+  <h2>How the gift shop works</h2>
+  <p>Everything is <strong>print-on-demand</strong> through {{ site.shop.provider or "a print-on-demand service" }} (the same setup works with <a href="https://www.redbubble.com/">Redbubble</a>, <a href="https://www.spri.ng/">Spring</a>, or <a href="https://www.printful.com/">Printful</a>). Each item is printed and shipped only when someone orders it, so the museum never holds inventory and never runs out of slop. Sizes, colors, prices, and shipping are handled on the store's checkout.</p>
+  <p>Got a slogan the machines would be proud of? <a href="/submit/">Send it in</a> along with your specimen.</p>
+</div>

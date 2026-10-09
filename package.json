@@ -1,0 +1,17 @@
+{
+  "name": "slop-archive",
+  "version": "1.0.0",
+  "description": "A free museum of AI slop in every medium: text, images, and video",
+  "scripts": {
+    "start": "eleventy --serve",
+    "build": "eleventy",
+    "new": "node scripts/new-entry.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6"
+  },
+  "type": "module"
+}

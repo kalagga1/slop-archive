@@ -1,0 +1,106 @@
+---
+layout: base.njk
+---
+<article class="exhibit">
+  <p class="kicker"><a href="/exhibits/">Exhibits</a> / Exhibit {{ exhibit | exhibitNo }}</p>
+  <h1>{{ title }}</h1>
+
+  {% if "example" in labels %}
+  <div class="notice" role="note">
+    <strong>Example placeholder.</strong> This exhibit is a parody written for the archive to show how entries look. It is not real found slop. Replace it with real submissions.
+  </div>
+  {% endif %}
+
+  {%- set v = video | videoInfo %}
+  {%- if v and v.embed %}
+  {#- Click-to-load video: no YouTube/Vimeo request until the visitor presses play. #}
+  <figure class="video-exhibit{% if v.vertical %} is-vertical{% endif %}">
+    <div class="video-frame" data-video-embed="{{ v.embed }}" data-video-title="{{ title }}">
+      <a class="video-poster" href="{{ v.watch }}" rel="noopener" target="_blank">
+        {%- if video_poster %}<img src="{{ video_poster }}" alt="" loading="lazy" decoding="async">{% endif %}
+        <span class="video-screen" aria-hidden="true"><span class="video-play">▶</span></span>
+        <span class="video-cta">Play the footage <small>({{ v.providerName }})</small></span>
+      </a>
+    </div>
+    <figcaption>🎞️ Video exhibit, hosted on {{ v.providerName }}{% if v.provider == "youtube" %} in privacy-enhanced mode{% endif %}. Nothing loads from {{ v.providerName }} until you press play. <a href="{{ v.watch }}" rel="noopener">Watch on {{ v.providerName }}</a></figcaption>
+  </figure>
+  {%- elif v %}
+  <p class="video-link">🎞️ Video: <a href="{{ v.watch }}" rel="noopener">{{ v.watch }}</a></p>
+  {%- endif %}
+
+  {%- set img = image | imageInfo %}
+  {%- if img %}
+  {#- Image exhibit: a framed artwork, lazy-loaded. Local files live in src/assets/exhibits/. #}
+  <figure class="artwork">
+    <div class="artwork-frame">
+      <a class="artwork-mat" href="{{ img.src }}" rel="noopener" title="Open the full-size image">
+        <img src="{{ img.src }}" alt="{{ image_alt or ('Image exhibit: ' + title) }}" loading="lazy" decoding="async"{% if image_width and image_height %} width="{{ image_width }}" height="{{ image_height }}"{% endif %}>
+      </a>
+    </div>
+    <figcaption class="artwork-plaque">
+      <span class="plaque-title">{{ title }}</span>
+      <span class="plaque-meta">🖼️ Image exhibit{% if image_credit %} · {{ image_credit }}{% elif img.host %} · via {{ img.host }}{% endif %}</span>
+    </figcaption>
+  </figure>
+  {%- endif %}
+
+  {%- if content | striptags | trim %}
+  <figure class="specimen">
+    <div class="specimen-text">
+      {{ content | safe }}
+    </div>
+  </figure>
+  {%- endif %}
+
+  <aside class="label-card" aria-label="Exhibit label">
+    <dl>
+      <dt>Exhibit</dt><dd>{{ exhibit | exhibitNo }}</dd>
+      <dt>Spotted in the wild</dt><dd>{{ spotted_in }}</dd>
+      <dt>Date spotted</dt><dd><time datetime="{{ spotted_on }}">{{ spotted_on | prettyDate }}</time></dd>
+      {% if submitted_by %}<dt>Donated by</dt><dd>{{ submitted_by }}</dd>{% endif %}
+      <dt>Tags</dt>
+      <dd class="tags">{% for label in {labels: labels, video: video, image: image} | allLabels %}<a class="pill" href="/tags/{{ label | slugify }}/">{{ label }}</a>{% endfor %}</dd>
+      {%- set sources = source | asList %}
+      {%- if sources.length %}
+      <dt>Sources</dt>
+      <dd class="sources"><ul>{% for src in sources %}<li><a href="{{ src }}" rel="noopener nofollow" target="_blank">{{ src | sourceLabel }}</a></li>{% endfor %}</ul></dd>
+      {%- endif %}
+    </dl>
+    {% if curator_note %}<p class="curator"><span>Curator's note:</span> {{ curator_note }}</p>{% endif %}
+  </aside>
+
+  <div class="exhibit-actions">
+    <button type="button" class="btn" data-random-button>Another random specimen</button>
+    <a class="btn btn-ghost" href="/exhibits/">Back to all exhibits</a>
+  </div>
+
+  {#
+    ===================================================================
+    COMMENTS SLOT (Giscus, free, stored in GitHub Discussions)
+    Disabled until you fill in src/_data/site.json -> "giscus" and set
+    "enabled": true. Get the IDs from https://giscus.app. See README.
+    ===================================================================
+  #}
+  <section class="comments" id="comments" aria-label="Comments">
+    <h2>Visitor comments</h2>
+    {% if site.giscus.enabled %}
+    <script src="https://giscus.app/client.js"
+      data-repo="{{ site.giscus.repo }}"
+      data-repo-id="{{ site.giscus.repoId }}"
+      data-category="{{ site.giscus.category }}"
+      data-category-id="{{ site.giscus.categoryId }}"
+      data-mapping="{{ site.giscus.mapping }}"
+      data-strict="1"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="top"
+      data-theme="{{ site.giscus.theme }}"
+      data-lang="en"
+      data-loading="lazy"
+      crossorigin="anonymous"
+      async></script>
+    {% else %}
+    <p class="placeholder">💬 Comments are coming soon. (TODO: enable Giscus in <code>src/_data/site.json</code>.)</p>
+    {% endif %}
+  </section>
+</article>

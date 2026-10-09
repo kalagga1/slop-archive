@@ -1,0 +1,57 @@
+name: Donate a specimen of AI slop
+description: Submit AI-generated text, images, or video you found in the wild.
+title: "[Specimen] "
+labels: ["submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for donating to the archive! Text, images, and video are all welcome. Please remove or blur names, emails, faces, and handles of private people (screenshots too).
+  - type: input
+    id: title
+    attributes:
+      label: Give it a title
+      placeholder: "Thrilled to Announce That I Have Delved"
+    validations:
+      required: true
+  - type: textarea
+    id: text
+    attributes:
+      label: The slop
+      description: "Text: paste it exactly as found, typos and all. Image: drag and drop it here (or paste a link). Video: paste the YouTube or Vimeo link."
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: For images or video, describe what it shows
+      description: This becomes the alt text and caption, so visitors who can't see it still get the joke.
+  - type: input
+    id: credit
+    attributes:
+      label: Credit / original source (if known)
+      placeholder: "Posted by @brand on Facebook, original link…"
+  - type: input
+    id: spotted_in
+    attributes:
+      label: Where did you spot it?
+      placeholder: "LinkedIn post / Amazon listing / recipe blog / homework"
+    validations:
+      required: true
+  - type: input
+    id: spotted_on
+    attributes:
+      label: When did you spot it? (YYYY-MM-DD, roughly is fine)
+      placeholder: "2026-10-07"
+  - type: input
+    id: labels
+    attributes:
+      label: Telltale signs (comma-separated tags)
+      placeholder: "delve, tapestry, fake confidence, broken poem"
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: House rules
+      options:
+        - label: This was published somewhere public (not a private message), and I've removed personal info.
+          required: true

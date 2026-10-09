@@ -1,0 +1,16 @@
+---
+layout: base.njk
+title: All exhibits
+permalink: /exhibits/
+---
+<h1>All exhibits</h1>
+<p class="lede">{{ collections.slop.length }} specimens in the collection, newest first.</p>
+<ul class="exhibit-list exhibit-list-full">
+{% for item in collections.slop %}
+  <li>
+    <a href="{{ item.url }}"><span class="no">{{ item.data.exhibit | exhibitNo }}</span> {{ item.data.title }}</a>
+    <span class="where">{{ item.data.spotted_in }} · {{ item.data.spotted_on | prettyDate }}</span>
+    <span class="tags">{% for label in item.data | allLabels %}<a class="pill pill-sm" href="/tags/{{ label | slugify }}/">{{ label }}</a>{% endfor %}</span>
+  </li>
+{% endfor %}
+</ul>

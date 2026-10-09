@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if title %}{{ title }} · {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ description or site.tagline }}">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="alternate" type="application/json" href="/slop.json" id="slop-data">
+  {%- set pageTitle %}{% if title %}{{ title }} · {% endif %}{{ site.title }}{% endset %}
+  {%- set pageDesc = description or site.tagline %}
+  {%- set ogImage = (ogImage or "/assets/img/og-image.png") | htmlBaseUrl(site.url) %}
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/img/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <meta name="theme-color" content="#1f1b16">
+  {#- Social share previews. og:image must be an absolute URL: set "url" in src/_data/site.json to your real domain. #}
+  <meta property="og:type" content="{% if exhibit %}article{% else %}website{% endif %}">
+  <meta property="og:site_name" content="{{ site.title }}">
+  <meta property="og:title" content="{{ pageTitle }}">
+  <meta property="og:description" content="{{ pageDesc }}">
+  <meta property="og:url" content="{{ page.url | htmlBaseUrl(site.url) }}">
+  <meta property="og:image" content="{{ ogImage }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="The Slop Archive: a melting green blob of slop on a museum pedestal behind a velvet rope">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ pageTitle }}">
+  <meta name="twitter:description" content="{{ pageDesc }}">
+  <meta name="twitter:image" content="{{ ogImage }}">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="logo" href="/">{% include "logo-mark.svg" %}<span>{{ site.title }}</span></a>
+    <nav aria-label="Main">
+      <a href="/exhibits/"{% if page.url == "/exhibits/" %} aria-current="page"{% endif %}>All exhibits</a>
+      <a href="/tags/"{% if page.url.startsWith("/tags/") and page.url != "/tags/video/" and page.url != "/tags/image/" %} aria-current="page"{% endif %}>Tags</a>
+      {%- if collections.slopTags | hasTag("image") %}
+      <a href="/tags/image/"{% if page.url == "/tags/image/" %} aria-current="page"{% endif %}>Images</a>
+      {%- endif %}
+      {%- if collections.slopTags | hasTag("video") %}
+      <a href="/tags/video/"{% if page.url == "/tags/video/" %} aria-current="page"{% endif %}>Videos</a>
+      {%- endif %}
+      <a href="/random/" data-random-link>Random</a>
+      <a href="/submit/"{% if page.url == "/submit/" %} aria-current="page"{% endif %}>Submit</a>
+      <a href="/forum/"{% if page.url == "/forum/" %} aria-current="page"{% endif %}>Forum</a>
+      <a href="/shop/"{% if page.url == "/shop/" %} aria-current="page"{% endif %}>Shop</a>
+    </nav>
+  </header>
+  <main id="main">
+    {{ content | safe }}
+  </main>
+  <footer class="site-footer">
+    {%- if page.url != "/newsletter/" %}
+    {% set nlVariant = "footer" %}{% include "newsletter-box.njk" %}
+    {%- endif %}
+    <p>{{ site.title }} · a free museum of AI slop in every medium: text, images &amp; video · <a href="/about/">About</a> · <a href="/submit/">Donate a specimen</a> · <a href="/newsletter/">Newsletter</a> · <a href="/shop/">Gift shop</a></p>
+    <p class="small">Exhibits marked <span class="pill">example</span> are placeholder parodies written for the archive, not real found slop.</p>
+  </footer>
+  <script src="/assets/random.js" defer></script>
+  {%- if video %}
+  <script src="/assets/video.js" defer></script>
+  {%- endif %}
+</body>
+</html>
