@@ -4,7 +4,7 @@ A free museum of AI slop in every medium: **text** (the LinkedIn posts that *del
 
 It's a **static site** built with [Eleventy (11ty)](https://www.11ty.dev/). There's no server and no database. Every exhibit is a Markdown file, images are small compressed files, and videos are embedded from YouTube/Vimeo, so it hosts free on **Cloudflare Pages** or **GitHub Pages**.
 
-> ⚠️ Exhibits No. 0012–0111 are **real, sourced AI slop** (each lists its sources on the exhibit page; research notes are in `docs/research-index.md`). The 12 entries numbered 0001–0011 and 0112 are **example placeholders**: parodies written to show the format, tagged `example` (No. 0011 shows a video exhibit, No. 0112 an image exhibit). Delete them whenever you like.
+> The collection starts with 100 real, sourced AI slop exhibits (No. 0012–0111). Each lists its sources on the exhibit page, and the research notes are in `docs/research-index.md`. Numbers 0001–0011 are unused on purpose, so existing exhibit URLs never change.
 
 ## What's inside
 
@@ -16,7 +16,7 @@ It's a **static site** built with [Eleventy (11ty)](https://www.11ty.dev/). Ther
 | Tag index and one page per tag | `/tags/`, `/tags/<tag>/` | `src/tags.njk`, `src/tag.njk` |
 | Random redirect | `/random/` | `src/random.njk` |
 | Submit instructions | `/submit/` | `src/submit.md` |
-| Forum placeholder | `/forum/` | `src/forum.md` |
+| Forum (links to GitHub Discussions) | `/forum/` | `src/forum.md` |
 | Gift shop (print-on-demand merch) | `/shop/` | `src/shop.njk` + `src/_data/merch.json` |
 | Slop of the Week newsletter | `/newsletter/` | `src/newsletter.njk` + `src/_includes/newsletter-box.njk` |
 | Image and video exhibits (auto tags) | `/tags/image/`, `/tags/video/` | `src/tag.njk` |
@@ -57,14 +57,14 @@ npm run build      # writes the finished site to _site/
 npm run new -- "Thrilled to Announce That I Have Delved"
 ```
 
-This creates `src/entries/0113-thrilled-to-announce-that-i-have-delved.md`. Open it and fill in the fields.
+This creates `src/entries/0112-thrilled-to-announce-that-i-have-delved.md`. Open it and fill in the fields.
 
 **By hand:** create `src/entries/NNNN-some-slug.md`:
 
 ```markdown
 ---
 title: "Premium Ergonomic Spoon for Men Women Kids Spoon Gift"
-exhibit: 11                       # unique number, shown as "No. 0011"
+exhibit: 112                      # unique number, shown as "No. 0112"
 spotted_in: "Amazon listing"      # where it was found
 spotted_on: "2026-10-07"          # keep the quotes
 labels: [product listing, keyword soup, fake confidence]
@@ -126,8 +126,6 @@ What happens:
 - Any other kind of URL is shown as a plain link (the build prints a warning).
 - The logic lives in `eleventy.config.js` (`videoInfo`), `src/_includes/entry.njk`, and `src/assets/video.js`.
 
-Exhibit No. 0011 is an `example` that uses the dummy URL `https://www.youtube.com/watch?v=PLACEHOLDER`. Replace it or delete it.
-
 **Before publishing a submission:** remove names, emails, and handles of private people (and blur them in screenshots).
 
 ## Deploy (free)
@@ -166,32 +164,21 @@ Either way, a human copies approved submissions into `src/entries/`. Only review
 
 ## Comments (Giscus) and the forum (GitHub Discussions)
 
-Comments use [Giscus](https://giscus.app/). It's free, stores comments in your repo's **GitHub Discussions**, and commenters sign in with GitHub. The forum uses the same Discussions, so everything lives in one place.
+Comments use [Giscus](https://giscus.app/). It's free, stores comments in the repo's **GitHub Discussions**, and commenters sign in with GitHub. The forum uses the same Discussions, so everything lives in one place.
 
-Every exhibit page already has a **comments slot** (see `src/_includes/entry.njk`, the `COMMENTS SLOT` block). It shows a "coming soon" note until you enable it:
+**Status:** enabled. `src/_data/site.json` → `giscus` points at `kalagga1/slop-archive`, category **Announcements** (only maintainers and giscus can start threads there), mapping **pathname**. Each exhibit gets its own thread, created on the first comment. The comments block is in `src/_includes/entry.njk` (`COMMENTS SLOT`).
 
-1. Make the repo **public**.
-2. **Settings → General → Features**: tick **Discussions**.
-3. In Discussions, create a category called **Exhibit comments** (Announcement type is best). Optionally add `Fresh slop`, `Slop theory`, and `Curator's desk` for the forum.
-4. Install the [giscus GitHub app](https://github.com/apps/giscus) on the repo.
-5. Go to https://giscus.app, enter the repo, choose mapping **pathname** and category **Exhibit comments**, and copy the `data-repo-id` and `data-category-id` values.
-6. Fill them in `src/_data/site.json`:
+**The [giscus GitHub App](https://github.com/apps/giscus) must be installed on the repo** or the comment box shows "giscus is not installed on this repository." Install it once (choose *Only select repositories* → `slop-archive`). To check: `curl 'https://giscus.app/api/discussions/categories?repo=kalagga1/slop-archive'`.
 
-```json
-"giscus": {
-  "enabled": true,
-  "repo": "your-username/slop-archive",
-  "repoId": "R_kgDO...",
-  "category": "Exhibit comments",
-  "categoryId": "DIC_kwDO...",
-  "mapping": "pathname",
-  "theme": "light"
-}
+To use a different category (for example a dedicated **Exhibit comments** Announcement-type category made in the Discussions settings), get its ID from https://giscus.app or:
+
+```bash
+gh api graphql -f query='{repository(owner:"kalagga1",name:"slop-archive"){id discussionCategories(first:20){nodes{id name}}}}'
 ```
 
-7. Rebuild and deploy. Each exhibit gets its own thread, created on first comment.
+and update `category` / `categoryId` in `site.json`. Set `enabled` to `false` to hide comments again.
 
-**Forum:** once Discussions is on, edit `src/forum.md` to link to `https://github.com/<you>/slop-archive/discussions`, or swap the nav link in `src/_includes/base.njk` to point there directly.
+**Forum:** `/forum/` links to https://github.com/kalagga1/slop-archive/discussions.
 
 ## Gift shop (merch)
 

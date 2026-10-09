@@ -48,7 +48,6 @@
     f("title").textContent = e.title;
     f("html").innerHTML = e.html; // curated, repo-controlled content
     f("spotted").textContent = "Spotted in: " + e.spotted_in + " · " + e.spotted_on;
-    f("example").hidden = !(e.labels || []).includes("example");
     f("link").href = resolve(e.url);
     const wrap = f("imagewrap"), img = f("image");
     if (wrap && img) {

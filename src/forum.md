@@ -7,20 +7,16 @@ permalink: /forum/
 
 # The Slop Lounge (forum)
 
-<div class="notice">
+The forum lives on **GitHub Discussions**. It's free, and it's the same place the comments under each exhibit are stored, so everything is in one spot. You need a free GitHub account to post.
 
-**Coming soon.** The plan is to use **GitHub Discussions** as the forum. It's free, needs no server, and it's the same backend that powers the comments under each exhibit (Giscus). So a comment on an exhibit and a forum thread live in one place, with one set of moderation tools.
+<p><a class="btn" href="{{ site.repo }}/discussions" rel="noopener">Enter the Slop Lounge →</a></p>
 
-**TODO (Geoff):** turn on Discussions for the repo, then replace this box with a link like
-`{{ site.repo }}/discussions`.
+What to talk about:
 
-</div>
+- **General**: "you won't believe what my fridge's manual said," fresh slop sightings, and slop theory (why does it say *delve* so much?)
+- **Ideas**: suggestions, tag ideas, and site feedback for the curators
+- **Announcements**: news from the museum, plus one comment thread per exhibit, created automatically when someone comments
 
-Planned categories:
-
-- **Exhibit comments**: one thread per exhibit, created automatically by Giscus
-- **Fresh slop**: "you won't believe what my fridge's manual said"
-- **Slop theory**: why does it say *delve* so much?
-- **Curator's desk**: suggestions, tag ideas, and site feedback
+Want to donate a specimen to the collection instead? See [Submit](/submit/).
 
 </div>

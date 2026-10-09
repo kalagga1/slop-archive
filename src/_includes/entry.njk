@@ -5,11 +5,6 @@ layout: base.njk
   <p class="kicker"><a href="/exhibits/">Exhibits</a> / Exhibit {{ exhibit | exhibitNo }}</p>
   <h1>{{ title }}</h1>
 
-  {% if "example" in labels %}
-  <div class="notice" role="note">
-    <strong>Example placeholder.</strong> This exhibit is a parody written for the archive to show how entries look. It is not real found slop. Replace it with real submissions.
-  </div>
-  {% endif %}
 
   {%- set v = video | videoInfo %}
   {%- if v and v.embed %}
@@ -77,12 +72,12 @@ layout: base.njk
   {#
     ===================================================================
     COMMENTS SLOT (Giscus, free, stored in GitHub Discussions)
-    Disabled until you fill in src/_data/site.json -> "giscus" and set
-    "enabled": true. Get the IDs from https://giscus.app. See README.
+    Configured in src/_data/site.json -> "giscus". See README > Comments.
     ===================================================================
   #}
   <section class="comments" id="comments" aria-label="Comments">
     <h2>Visitor comments</h2>
+    {% if site.giscus.enabled %}<p class="small">Sign in with GitHub to comment. Comments are stored in <a href="{{ site.repo }}/discussions" rel="noopener">the archive's GitHub Discussions</a>.</p>{% endif %}
     {% if site.giscus.enabled %}
     <script src="https://giscus.app/client.js"
       data-repo="{{ site.giscus.repo }}"
@@ -100,7 +95,7 @@ layout: base.njk
       crossorigin="anonymous"
       async></script>
     {% else %}
-    <p class="placeholder">💬 Comments are coming soon. (TODO: enable Giscus in <code>src/_data/site.json</code>.)</p>
+    <p class="placeholder">💬 Comments are coming soon.</p>
     {% endif %}
   </section>
 </article>

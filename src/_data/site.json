@@ -5,12 +5,12 @@
   "repo": "https://github.com/kalagga1/slop-archive",
   "submitFormUrl": "",
   "giscus": {
-    "enabled": false,
-    "_comment": "TODO: fill these in from https://giscus.app, then set enabled to true. See README > Comments.",
+    "enabled": true,
+    "_comment": "Giscus comments, stored in GitHub Discussions (Announcements category, so only maintainers and giscus can start threads). Requires the giscus GitHub App installed on the repo: https://github.com/apps/giscus",
     "repo": "kalagga1/slop-archive",
-    "repoId": "TODO_REPO_ID",
-    "category": "Exhibit comments",
-    "categoryId": "TODO_CATEGORY_ID",
+    "repoId": "R_kgDOVCEh7Q",
+    "category": "Announcements",
+    "categoryId": "DIC_kwDOVCEh7c4DHZO-",
     "mapping": "pathname",
     "theme": "light"
   },
