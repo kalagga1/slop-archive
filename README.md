@@ -4,7 +4,7 @@ A free museum of AI slop in every medium: **text** (the LinkedIn posts that *del
 
 It's a **static site** built with [Eleventy (11ty)](https://www.11ty.dev/). There's no server and no database. Every exhibit is a Markdown file, images are small compressed files, and videos are embedded from YouTube/Vimeo, so it hosts free on **Cloudflare Pages** or **GitHub Pages**.
 
-> The collection starts with 100 real, sourced AI slop exhibits (No. 0012–0111). Each lists its sources on the exhibit page, and the research notes are in `docs/research-index.md`. Numbers 0001–0011 are unused on purpose, so existing exhibit URLs never change.
+> The collection has 200 real, sourced AI slop exhibits (No. 0012–0211, added in two batches of 100). Each lists its sources on the exhibit page, and the research notes are in `docs/research-index.md`. Numbers 0001–0011 are unused on purpose, so existing exhibit URLs never change.
 
 ## What's inside
 
@@ -57,14 +57,14 @@ npm run build      # writes the finished site to _site/
 npm run new -- "Thrilled to Announce That I Have Delved"
 ```
 
-This creates `src/entries/0112-thrilled-to-announce-that-i-have-delved.md`. Open it and fill in the fields.
+This creates `src/entries/0212-thrilled-to-announce-that-i-have-delved.md`. Open it and fill in the fields.
 
 **By hand:** create `src/entries/NNNN-some-slug.md`:
 
 ```markdown
 ---
 title: "Premium Ergonomic Spoon for Men Women Kids Spoon Gift"
-exhibit: 112                      # unique number, shown as "No. 0112"
+exhibit: 212                      # unique number, shown as "No. 0212"
 spotted_in: "Amazon listing"      # where it was found
 spotted_on: "2026-10-07"          # keep the quotes
 labels: [product listing, keyword soup, fake confidence]
