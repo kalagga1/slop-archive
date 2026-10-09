@@ -71,31 +71,26 @@ layout: base.njk
 
   {#
     ===================================================================
-    COMMENTS SLOT (Giscus, free, stored in GitHub Discussions)
-    Configured in src/_data/site.json -> "giscus". See README > Comments.
+    COMMENTS SLOT (Cusdis, free hosted comments, no visitor accounts)
+    Configured in src/_data/site.json -> "cusdis". Shows a placeholder
+    until "enabled" is true AND "appId" is filled in. See README > Comments.
     ===================================================================
   #}
+  {%- set cusdisOn = site.cusdis.enabled and site.cusdis.appId and not ("TODO" in site.cusdis.appId) %}
   <section class="comments" id="comments" aria-label="Comments">
     <h2>Visitor comments</h2>
-    {% if site.giscus.enabled %}<p class="small">Sign in with GitHub to comment. Comments are stored in <a href="{{ site.repo }}/discussions" rel="noopener">the archive's GitHub Discussions</a>.</p>{% endif %}
-    {% if site.giscus.enabled %}
-    <script src="https://giscus.app/client.js"
-      data-repo="{{ site.giscus.repo }}"
-      data-repo-id="{{ site.giscus.repoId }}"
-      data-category="{{ site.giscus.category }}"
-      data-category-id="{{ site.giscus.categoryId }}"
-      data-mapping="{{ site.giscus.mapping }}"
-      data-strict="1"
-      data-reactions-enabled="1"
-      data-emit-metadata="0"
-      data-input-position="top"
-      data-theme="{{ site.giscus.theme }}"
-      data-lang="en"
-      data-loading="lazy"
-      crossorigin="anonymous"
-      async></script>
+    {% if cusdisOn %}
+    <p class="small">No account needed: leave a nickname and say your piece. Comments appear after a curator approves them.</p>
+    <div id="cusdis_thread"
+      data-host="{{ site.cusdis.host or 'https://cusdis.com' }}"
+      data-app-id="{{ site.cusdis.appId }}"
+      data-page-id="{{ page.url }}"
+      data-page-url="{{ page.url | htmlBaseUrl(site.url) }}"
+      data-page-title="{{ exhibit | exhibitNo }}: {{ title }}"
+      data-theme="{{ site.cusdis.theme or 'light' }}"></div>
+    <script async defer src="{{ site.cusdis.host or 'https://cusdis.com' }}/js/cusdis.es.js"></script>
     {% else %}
-    <p class="placeholder">💬 Comments are coming soon.</p>
+    <p class="placeholder">💬 Comments open soon. No account will be needed. Meanwhile, come chat in <a href="/forum/">the Slop Lounge</a>.</p>
     {% endif %}
   </section>
 </article>

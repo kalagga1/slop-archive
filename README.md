@@ -162,23 +162,40 @@ To preview a prefixed build locally: `npx eleventy --pathprefix=/slop-archive/`.
 
 Either way, a human copies approved submissions into `src/entries/`. Only reviewed content goes on the site.
 
-## Comments (Giscus) and the forum (GitHub Discussions)
+## Comments (Cusdis) and the forum (Reddit)
 
-Comments use [Giscus](https://giscus.app/). It's free, stores comments in the repo's **GitHub Discussions**, and commenters sign in with GitHub. The forum uses the same Discussions, so everything lives in one place.
+### Comments
 
-**Status:** enabled. `src/_data/site.json` → `giscus` points at `kalagga1/slop-archive`, category **Announcements** (only maintainers and giscus can start threads there), mapping **pathname**. Each exhibit gets its own thread, created on the first comment. The comments block is in `src/_includes/entry.njk` (`COMMENTS SLOT`).
+Comments use [Cusdis](https://cusdis.com/), a free, lightweight comment service. **Visitors don't need any account**: they type a nickname (email optional) and a comment. Every exhibit page has a comments block (`src/_includes/entry.njk`, the `COMMENTS SLOT`). It shows "Comments open soon" until Cusdis is switched on in `src/_data/site.json`.
 
-**The [giscus GitHub App](https://github.com/apps/giscus) must be installed on the repo** or the comment box shows "giscus is not installed on this repository." Install it once (choose *Only select repositories* → `slop-archive`). To check: `curl 'https://giscus.app/api/discussions/categories?repo=kalagga1/slop-archive'`.
+To turn comments on:
 
-To use a different category (for example a dedicated **Exhibit comments** Announcement-type category made in the Discussions settings), get its ID from https://giscus.app or:
+1. Sign up at https://cusdis.com (free; you can sign in with GitHub or Google).
+2. In the dashboard, click **New website** and name it "The Slop Archive".
+3. Open the website, then **Embed code**, and copy the value of `data-app-id` (a long ID like `a1b2c3d4-...`).
+4. Paste it into `src/_data/site.json`:
 
-```bash
-gh api graphql -f query='{repository(owner:"kalagga1",name:"slop-archive"){id discussionCategories(first:20){nodes{id name}}}}'
+```json
+"cusdis": {
+  "enabled": true,
+  "host": "https://cusdis.com",
+  "appId": "PASTE-YOUR-APP-ID-HERE",
+  "theme": "light"
+}
 ```
 
-and update `category` / `categoryId` in `site.json`. Set `enabled` to `false` to hide comments again.
+5. Commit and push. The GitHub Action redeploys, and every exhibit gets its own thread (keyed by the exhibit's URL path, so it survives a domain change).
 
-**Forum:** `/forum/` links to https://github.com/kalagga1/slop-archive/discussions.
+**Moderation:** new comments **wait for your approval** in the Cusdis dashboard and don't appear on the site until you approve them. You can also approve or reply from the notification email. To publish comments instantly, turn on **auto-approve** in the website's settings in the dashboard (you can still delete comments afterwards). To hide comments again, set `enabled` to `false`.
+
+### Forum
+
+The forum ("The Slop Lounge") is a subreddit. It's configured in `src/_data/site.json` → `forum`:
+
+1. Create the subreddit at https://www.reddit.com/subreddits/create with the name in `forum.subreddit` (default `SlopArchive`; change `subreddit` and `url` if that name is taken).
+2. Set `"live": true`. The Forum page then shows an "Enter the Slop Lounge" button instead of "Opening soon".
+
+The Forum page also has a small link to the repo's GitHub Discussions (`forum.discussionsUrl`) for people who prefer GitHub.
 
 ## Gift shop (merch)
 
@@ -223,10 +240,10 @@ A signup box appears on the home page, in the footer of every page, and on `/new
 
 ```
 eleventy.config.js        # collections (slop, slopTags), filters, path-prefix plugin
-src/_data/site.json       # site title, repo URL, submit form URL, Giscus, shop and newsletter config
+src/_data/site.json       # site title, repo URL, submit form URL, Cusdis comments, forum (subreddit), shop and newsletter config
 src/_data/merch.json      # gift shop products
 src/_includes/base.njk    # page shell + nav
-src/_includes/entry.njk   # exhibit page (framed image, video player, specimen, label) + comments slot
+src/_includes/entry.njk   # exhibit page (framed image, video player, specimen, label) + comments slot (Cusdis)
 src/_includes/newsletter-box.njk  # Slop of the Week signup box (home, footer, /newsletter/)
 src/shop.njk, src/newsletter.njk  # gift shop and newsletter pages
 src/entries/*.md          # the exhibits (one file each)

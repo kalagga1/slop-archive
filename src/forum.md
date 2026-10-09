@@ -7,16 +7,26 @@ permalink: /forum/
 
 # The Slop Lounge (forum)
 
-The forum lives on **GitHub Discussions**. It's free, and it's the same place the comments under each exhibit are stored, so everything is in one spot. You need a free GitHub account to post.
+The Slop Lounge is the museum's subreddit, **r/{{ site.forum.subreddit }}**. Share fresh slop you've spotted in the wild, argue about why it always says *delve*, and suggest new exhibits. Reading is open to everyone, and posting needs only a free Reddit account.
 
-<p><a class="btn" href="{{ site.repo }}/discussions" rel="noopener">Enter the Slop Lounge →</a></p>
+{% if site.forum.live %}
+<p><a class="btn" href="{{ site.forum.url }}" rel="noopener">Enter the Slop Lounge on Reddit →</a></p>
+{% else %}
+<div class="notice">
+
+**Opening soon.** The Slop Lounge's doors open shortly at <strong>r/{{ site.forum.subreddit }}</strong>. Check back in a few days.
+
+</div>
+{% endif %}
 
 What to talk about:
 
-- **General**: "you won't believe what my fridge's manual said," fresh slop sightings, and slop theory (why does it say *delve* so much?)
-- **Ideas**: suggestions, tag ideas, and site feedback for the curators
-- **Announcements**: news from the museum, plus one comment thread per exhibit, created automatically when someone comments
+- **Fresh slop**: "you won't believe what my fridge's manual said"
+- **Slop theory**: why does it say *delve* so much?
+- **Curator's desk**: suggestions, tag ideas, and site feedback
 
 Want to donate a specimen to the collection instead? See [Submit](/submit/).
+
+<p class="small">Prefer GitHub? There's also a quieter corner in the archive's <a href="{{ site.forum.discussionsUrl }}" rel="noopener">GitHub Discussions</a>.</p>
 
 </div>

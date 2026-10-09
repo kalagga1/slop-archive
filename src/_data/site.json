@@ -4,15 +4,19 @@
   "url": "https://kalagga1.github.io",
   "repo": "https://github.com/kalagga1/slop-archive",
   "submitFormUrl": "",
-  "giscus": {
-    "enabled": true,
-    "_comment": "Giscus comments, stored in GitHub Discussions (Announcements category, so only maintainers and giscus can start threads). Requires the giscus GitHub App installed on the repo: https://github.com/apps/giscus",
-    "repo": "kalagga1/slop-archive",
-    "repoId": "R_kgDOVCEh7Q",
-    "category": "Announcements",
-    "categoryId": "DIC_kwDOVCEh7c4DHZO-",
-    "mapping": "pathname",
+  "cusdis": {
+    "_comment": "TODO (Geoff): sign up at https://cusdis.com, add a website, copy its App ID into appId, then set enabled to true. See README > Comments. Comments wait for approval in the Cusdis dashboard unless auto-approve is on.",
+    "enabled": false,
+    "host": "https://cusdis.com",
+    "appId": "",
     "theme": "light"
+  },
+  "forum": {
+    "_comment": "TODO (Geoff): create the subreddit at https://www.reddit.com/subreddits/create (name SlopArchive), then set live to true. Until then the Forum page says the lounge is opening soon.",
+    "live": false,
+    "subreddit": "SlopArchive",
+    "url": "https://www.reddit.com/r/SlopArchive/",
+    "discussionsUrl": "https://github.com/kalagga1/slop-archive/discussions"
   },
   "shop": {
     "_comment": "TODO (Geoff): paste your print-on-demand store link into url (Redbubble, Spring, or Printful storefront). While it starts with TODO, the Buy buttons point at the 'store opening soon' note instead. Products live in src/_data/merch.json; each can also have its own url.",
